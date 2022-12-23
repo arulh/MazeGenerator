@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 // Disjoint set data structure implemented using ArrayList
 // Representative of set has value -1
@@ -24,7 +23,7 @@ public class DisjointSet  {
         }
     }
 
-
+    // combines set b to a
     public void union(int a, int b) {
         int x = find(a);
         int y = find(b);

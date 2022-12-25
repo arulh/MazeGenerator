@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -21,7 +20,7 @@ public class Maze {
     public int height;
     private final Coord start;
     private final Coord end;
-    private boolean[][] maze; // true if there is path
+    private boolean[][] wallLayout; // true if there is path
 
     public Maze(int w, int h, Coord s, Coord e) {
         this.ds = new DisjointSet(w*h);
@@ -29,44 +28,33 @@ public class Maze {
         this.height = h;
         this.start = s;
         this.end = e;
-        maze = new boolean[h][w];
+        wallLayout = new boolean[h][w];
 
-        for (boolean[] l : maze) {
+        for (boolean[] l : wallLayout) {
             Arrays.fill(l, false);
         }
 
-        maze[start.y][start.x] = true;
-        maze[end.y][end.x] = true;
+        wallLayout[start.y][start.x] = true;
+        wallLayout[end.y][end.x] = true;
     }
 
-    public void makeMaze() {
+    public void generate() {
         Random r = new Random();
         while (ds.find(setIndex(start)) != ds.find(setIndex(end))) {
-            int x = r.nextInt(width*height-1);
+            int x = r.nextInt(width*height);
             Coord c = mazeCoord(x);
-            maze[c.y][c.x] = true;
+            wallLayout[c.y][c.x] = true;
 
             for (Coord coord : getNeighbours(c)) {
                 boolean inMaze = (coord.x >= 0 && coord.x < width) && (coord.y >= 0 && coord.y < height);
                 if (!inMaze) continue;
 
-                boolean explored = maze[coord.y][coord.x];
+                boolean explored = wallLayout[coord.y][coord.x];
 
                 if (explored) {
                     ds.union(setIndex(c), setIndex(coord));
                 }
             }
-        }
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (maze[y][x]) {
-                    System.out.print("0 ");
-                } else {
-                    System.out.print("# ");
-                }
-            }
-            System.out.print("\n");
         }
     }
 
@@ -88,8 +76,8 @@ public class Maze {
         return width*c.y + c.x;
     }
 
-    public boolean[][] getMaze() {
-        return maze;
+    public boolean[][] getWallLayout() {
+        return wallLayout;
     }
 
     public Coord getStart() {

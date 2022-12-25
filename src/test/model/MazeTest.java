@@ -27,7 +27,7 @@ public class MazeTest {
         assertEquals(9, maze1.getEnd().x);
         assertEquals(9, maze1.getEnd().y);
 
-        boolean[][] maze = maze1.getMaze();
+        boolean[][] maze = maze1.getWallLayout();
         for (int x = 0; x < maze1.width; x++) {
             for (int y = 0; y < maze1.height; y++) {
                 if (x == maze1.getStart().x || y == maze1.getStart().y) continue;
@@ -40,7 +40,7 @@ public class MazeTest {
     }
 
     @Test
-    void testMakeMaze() {
-        maze1.makeMaze();
+    void testGenerate() {
+        maze1.generate();
     }
 }

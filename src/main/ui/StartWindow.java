@@ -36,7 +36,9 @@ public class StartWindow extends Window implements ActionListener {
         if (e.getSource() == easyMazeButton) {
             System.out.println("Easy button clicked");
 
-            GameWindow gw = new GameWindow();
+            Maze maze = new Maze(10, 10, new Maze.Coord(0, 0), new Maze.Coord(9, 9));
+
+            GameWindow gw = new GameWindow(maze);
             gw.launchWindow();
             frame.dispose();
         } else if (e.getSource() == mediumMazeButton) {

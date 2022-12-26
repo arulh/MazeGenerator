@@ -19,6 +19,7 @@ public class GameWindow extends Window implements ActionListener, KeyListener {
     private final Maze maze;
     private JLayeredPane base; // panel for maze objects
     private Maze.Coord pos;
+    private JPanel player;
 
     public GameWindow(Maze m) {
         this.maze = m;
@@ -41,8 +42,8 @@ public class GameWindow extends Window implements ActionListener, KeyListener {
         frame.addKeyListener(this);
 
         drawMaze();
-        drawCurrentPos(maze.getStart().x*RECT_WIDTH + BASE_POS,
-                maze.getStart().y*RECT_HEIGHT + BASE_POS);
+        player = drawCurrentPos();
+        base.add(player, JLayeredPane.PALETTE_LAYER);
 
         windowSettings("MAZE", new Color(84, 118, 157));
     }
@@ -55,9 +56,6 @@ public class GameWindow extends Window implements ActionListener, KeyListener {
     private void drawMaze() {
         for (int y = 0; y < maze.height; y++) {
             for (int x = 0; x < maze.width; x++) {
-                int a = 11; // adjusts position of each rectangle to create border
-                int sep = 2; // adjusts separation between each rectangle
-
                 if (maze.getStart().x == x && maze.getStart().y == y) {
                     base.add(drawRectangle(x*RECT_WIDTH + BASE_POS, y*RECT_HEIGHT + BASE_POS, Color.green),
                             JLayeredPane.DEFAULT_LAYER);
@@ -92,18 +90,40 @@ public class GameWindow extends Window implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             System.out.println("Left key");
+            Maze.Coord c = new Maze.Coord(pos.x-1, pos.y);
+            if (validMovement(c)) movePlayer(c);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             System.out.println("Down key");
+            Maze.Coord c = new Maze.Coord(pos.x, pos.y+1);
+            if (validMovement(c)) movePlayer(c);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             System.out.println("Right key");
+            Maze.Coord c = new Maze.Coord(pos.x+1, pos.y);
+            if (validMovement(c)) movePlayer(c);
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
             System.out.println("UP key");
-        } else {
-            System.out.println(e.getKeyChar());
+            Maze.Coord c = new Maze.Coord(pos.x, pos.y-1);
+            if (validMovement(c)) movePlayer(c);
         }
     }
 
-    private void drawCurrentPos(int x, int y) {
+    private boolean validMovement(Maze.Coord c) {
+        boolean inMaze = (c.x >= 0 && c.x < maze.width) && (c.y >= 0 && c.y < maze.height);
+        if (!inMaze) return false;
+        boolean openSpace = maze.getWallLayout()[c.y][c.x];
+        return openSpace;
+    }
+
+    private void movePlayer(Maze.Coord c) {
+        base.remove(player);
+        base.moveToBack(player);
+
+        pos = c;
+        player = drawCurrentPos();
+        base.add(player, JLayeredPane.PALETTE_LAYER);
+    }
+
+    private JPanel drawCurrentPos() {
         JPanel panel = new JPanel();
         ImageIcon player = new ImageIcon("data/icons/cat.png");
         Image img = player.getImage();
@@ -111,10 +131,11 @@ public class GameWindow extends Window implements ActionListener, KeyListener {
         player = new ImageIcon(scaledIMG);
         JLabel label = new JLabel(player);
         panel.add(label);
-        panel.setBounds(x, y, RECT_WIDTH-AREA_OFFSET, RECT_HEIGHT-AREA_OFFSET);
+        panel.setBounds(pos.x*RECT_WIDTH + BASE_POS, pos.y*RECT_HEIGHT + BASE_POS,
+                RECT_WIDTH-AREA_OFFSET, RECT_HEIGHT-AREA_OFFSET);
         panel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
-        base.add(panel, JLayeredPane.PALETTE_LAYER);
+        return panel;
     }
 
     @Override

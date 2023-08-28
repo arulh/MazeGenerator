@@ -1,5 +1,7 @@
 # MazeGenerator
 
+Randomely generates maze and allows user to solve the maze. Best solution is shows after and is found with a breadth first search traversal. The maze is represented as a disjoint set where each set represents a path. Sets are combined if paths are adjacent to eachother.  
+
 ### Baseline Generating Algorithm
 
 Randomely chooses a coordinate from the maze to become a path till there is a path between the start and end coordinates. Start is at the upper left and the end is at the bottom right.

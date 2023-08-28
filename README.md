@@ -1,4 +1,4 @@
-<img width="540" alt="Screen Shot 2023-08-28 at 3 25 14 PM" src="https://github.com/arulh/MazeGenerator/assets/104797653/6795e60f-4906-40af-96e2-a91ae5c2891d"># MazeGenerator
+# MazeGenerator
 
 ### Baseline Generating Algorithm
 

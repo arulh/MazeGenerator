@@ -8,8 +8,8 @@ Randomely chooses a coordinate from the maze to become a path till there is a pa
 
 **Variant 1:**
 
-<img width="350" alt="Screen Shot 2023-08-28 at 3 24 44 PM" src="https://github.com/arulh/MazeGenerator/assets/104797653/4df61182-f16c-4ed1-85bb-741cf9fd4de6">
-<img width="350" alt="Screen Shot 2023-08-28 at 3 25 14 PM" src="https://github.com/arulh/MazeGenerator/assets/104797653/89ab4fa0-fe20-4a9b-be1e-069faa2d57d2">
+<img width="350" alt="Screen Shot 2023-08-28 at 4 51 24 PM" src="https://github.com/arulh/MazeGenerator/assets/104797653/93b7dff1-71ea-48af-af30-d335be328aa8">
+<img width="350" alt="Screen Shot 2023-08-28 at 4 52 17 PM" src="https://github.com/arulh/MazeGenerator/assets/104797653/ceb6ce0b-1675-4362-b28b-72a0d3ac32de">
 
 
 **Variant 2:**
